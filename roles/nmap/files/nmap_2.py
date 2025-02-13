@@ -115,7 +115,7 @@ async def get_devices(session, network_id):
         return []  # Return an empty list if the request fails
 
 async def fetch_meraki_data():
-    async with aiohttp.ClientSession() as session:
+    async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(verify_ssl=False)) as session:
         organizations = await get_organizations(session)
         results = []
         for org in organizations:
