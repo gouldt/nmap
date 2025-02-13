@@ -1,3 +1,7 @@
 nmap_integration_II.code-workspace
 .DS_Store
 .ansible/.lock
+roles/nmap/files/10.0.0.0.txt.orig
+.gitignore
+roles/nmap/files/192.168.0.0.txt.orig
+roles/nmap/files/172.16.0.0.txt.orig
