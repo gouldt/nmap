@@ -68,7 +68,7 @@ async def fetch_vmanage_data():
     all_vmanage_data = []
     for config in VMANAGE_CONFIGS:
         try:
-            async with aiohttp.ClientSession() as session:
+            async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(verify_ssl=False)) as session:
                 await login(session, config['host'], config['username'], config['password'])
                 response = await fetch_devices(session, config['host'])
                 devices = response.get('data', [])
@@ -775,7 +775,7 @@ async def main():
         csv_writer.writerow(['Device IP', 'Device Name', 'Port', 'State', 'Service'])
 
         # Process files containing subnet information
-        files = ["10.0.0.0.txt", "172.16.0.0.txt", "192.168.0.0.txt"]
+        files = ["/runner/project/roles/nmap/files/10.0.0.0.txt", "/runner/project/roles/nmap/files/172.16.0.0.txt", "/runner/project/roles/nmap/files/192.168.0.0.txt"]
         for file_name in files:
             subnets = read_subnets(file_name)
             run_nmap_on_subnets(subnets, csv_writer)
