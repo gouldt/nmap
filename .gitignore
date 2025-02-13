@@ -1,2 +1,3 @@
 nmap_integration_II.code-workspace
 .DS_Store
+.ansible/.lock

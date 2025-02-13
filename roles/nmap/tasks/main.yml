@@ -1,6 +1,12 @@
 ---
 # Run mnap scans
 
+- name: create output directory
+  file:
+    path: "{{ nmap_output_dir }}"
+    state: directory
+    mode: '0755'
+
 - name: execute nmap scans
   ansible.builtin.command:
     agrv:
