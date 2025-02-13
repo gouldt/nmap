@@ -1,0 +1,8 @@
+- name: Log unsupported device type
+  ansible.builtin.debug:
+    msg: "Unsupported device type for {{ item.value.ansible_host }}"
+  register: unsupported_device
+
+- name: Set default serial number for unsupported device
+  set_fact:
+    device_serial_number: "Unsupported"

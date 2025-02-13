@@ -1,0 +1,8 @@
+---
+# Run mnap scans
+
+- name: execute nmap scans
+  ansible.builtin.command:
+    agrv:
+      - /usr/bin/python3 nmap_2.py
+  register: result

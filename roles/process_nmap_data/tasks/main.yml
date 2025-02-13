@@ -1,0 +1,28 @@
+---
+
+#Update Inventory with Serial Numbers
+- name: Load YAML inventory file
+  ansible.builtin.include_vars:
+    file: "{{ inventory_file }}"
+    name: inventory_data
+
+- name: Gather facts and update serial numbers
+  include_tasks: "{{ inventory_data.all.hosts[item.key].device_type | default('unsupported') }}_facts.yml"
+  loop: "{{ query('dict', inventory_data.all.hosts) }}"
+  loop_control:
+    label: "{{ item.key }}"
+  when: inventory_data.all.hosts[item.key].device_type is defined
+  register: updated_hosts
+
+- name: Prepare data for CSV
+  set_fact:
+    csv_lines: "{{ csv_lines | default([]) + [item.key + ',' + (inventory_data.all.hosts[item.key].hostname | default('Unknown')) + ',' + (inventory_data.all.hosts[item.key].device_type | default('Unknown')) + ',' + (inventory_data.all.hosts[item.key].model | default('Unknown')) + ',' + (inventory_data.all.hosts[item.key].version | default('Unknown')) + ',' + (updated_hosts.results | selectattr('item.key', 'equalto', item.key) | map(attribute='ansible_facts.device_serial_number') | first | default('Unknown'))] }}"
+  loop: "{{ query('dict', inventory_data.all.hosts) }}"
+  loop_control:
+    label: "{{ item.key }}"
+
+- name: Write data to CSV
+  copy:
+    content: "{{ csv_headers }}\n{{ csv_lines | join('\n') }}"
+    dest: "{{ output_csv }}"
+  delegate_to: localhost

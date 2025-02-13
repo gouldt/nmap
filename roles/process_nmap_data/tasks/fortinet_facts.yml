@@ -1,0 +1,17 @@
+- name: Gather FortiGate system facts
+  fortinet.fortios.fortios_system_fact:
+    vdom: "root"
+    selector: "system_status"
+    config: "system status"
+    host: "{{ ansible_host }}"
+    username: "{{ ansible_user }}"
+    password: "{{ ansible_ssh_pass }}"
+    ansible_httpapi_use_ssl: yes
+    ansible_httpapi_validate_certs: no  # Change to yes in production
+    ansible_httpapi_port: 443
+  register: fortigate_facts
+
+- name: Set fact for the serial number
+  set_fact:
+    device_serial_number: "{{ fortigate_facts.ansible_facts.fortios_system_status.serial_number }}"
+  when: fortigate_facts.ansible_facts.fortios_system_status is defined

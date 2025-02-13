@@ -1,0 +1,3 @@
+inventory_file: '/opt/Network_Automation/Python_Projects/nmap_integration/Ansible_Serial_Model_Validation/Inventory/network_device_info.yml'
+output_csv: '/opt/Network_Automation/Python_Projects/nmap_integration/Ansible_Serial_Model_Validation/Logs/output.csv'
+csv_headers: "IP,Hostname,Device Type,Model,Version,Serial Number"

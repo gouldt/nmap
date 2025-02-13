@@ -1,0 +1,17 @@
+---
+- name: Run Netscaler commands
+  ansible.netcommon.cli_command:
+    command: "show hardware"
+  register: hardware_output
+  delegate_to: "{{ ansible_host }}"
+  vars:
+    ansible_user: "{{ item.value.ansible_user }}"
+    ansible_ssh_pass: "{{ item.value.ansible_ssh_pass }}"
+
+- name: Extract Serial Number from hardware output
+  set_fact:
+    netscaler_serial: "{{ hardware_output.stdout | regex_search('Serial no:\\s+(\\S+)', '\\1') | first }}"
+
+- name: Update Serial Number in host vars
+  set_fact:
+    device_serial_number: "{{ netscaler_serial }}"

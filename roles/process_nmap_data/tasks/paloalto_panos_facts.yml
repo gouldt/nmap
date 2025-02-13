@@ -1,0 +1,11 @@
+- name: Gather Palo Alto Networks facts
+  paloaltonetworks.panos.panos_facts:
+    ip_address: "{{ ansible_host }}"
+    username: "{{ ansible_user }}"
+    password: "{{ ansible_ssh_pass }}"
+    ansible_connection: network_cli
+  register: panos_facts
+
+- name: Set fact for the serial number
+  set_fact:
+    device_serial_number: "{{ panos_facts.ansible_facts.serial }}"

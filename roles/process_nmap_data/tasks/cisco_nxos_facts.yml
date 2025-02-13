@@ -1,0 +1,15 @@
+- name: Gather Cisco IOS facts with network SSH
+  cisco.ios.ios_facts:
+    gather_subset: all
+    ansible_network_os: ios
+    ansible_connection: network_cli
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+    host: "{{ ansible_host }}"
+    username: "{{ ansible_user }}"
+    password: "{{ ansible_ssh_pass }}"
+  register: ios_facts
+  ignore_errors: yes
+
+- name: Set fact for the serial number
+  set_fact:
+    device_serial_number: "{{ ios_facts.ansible_facts.ansible_net_serialnum }}"

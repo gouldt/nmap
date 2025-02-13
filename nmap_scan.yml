@@ -1,0 +1,9 @@
+---
+- name: Gather nmap data
+  hosts: localhost
+  gather_facts: no
+  become: false
+
+  roles:
+    - role: nmap
+  #  - role: process_nmap_data

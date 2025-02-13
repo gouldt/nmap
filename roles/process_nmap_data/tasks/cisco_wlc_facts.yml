@@ -1,0 +1,15 @@
+
+- name: Execute command to get system information
+  community.network.aireos_command:
+    provider:
+      host: "{{ ansible_host }}"
+      username: "{{ ansible_user }}"
+      password: "{{ ansible_ssh_pass }}"
+      timeout: 30 # Optional: Adjust the timeout as needed
+    commands:
+      - show sysinfo
+  register: wlc_sysinfo
+
+- name: Parse serial number from system information
+  set_fact:
+    wlc_serial_number: "{{ (wlc_sysinfo.stdout_lines[0] | select('match', 'Serial Number') | list | first).split(':').1.strip() }}"
