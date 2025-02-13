@@ -8,14 +8,5 @@
     mode: '0755'
 
 - name: execute nmap scans
-<<<<<<<<< Temporary merge branch 1
-  command: ./nmap_2.py
-  args:
-    chdir: "{{ role_path }}"/files
+  command: /usr/bin/python3 {{ role_path }}/files/nmap_2.py
   register: output
-=========
-  ansible.builtin.command:
-    argv:
-      - cd {{ role_path }}/files
-      - /usr/bin/python3 nmap_2.py
-  register: result
