@@ -6,10 +6,14 @@
     path: "{{ nmap_output_dir }}"
     state: directory
     mode: '0755'
+
 - name: execute nmap scans
-  ansible.builtin.command: pwd
-  
-- name: execute nmap scans
+<<<<<<<<< Temporary merge branch 1
+  command: ./nmap_2.py
+  args:
+    chdir: "{{ role_path }}"/files
+  register: output
+=========
   ansible.builtin.command:
     argv:
       - cd {{ role_path }}/files
