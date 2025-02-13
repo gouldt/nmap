@@ -8,5 +8,7 @@
     mode: '0755'
 
 - name: execute nmap scans
-  script: nmap_2.py
-  register: result
+  command: ./nmap_2.py
+  args:
+    chdir: "{{ role_path }}"/files
+  register: output
