@@ -10,5 +10,5 @@
 - name: execute nmap scans
   ansible.builtin.command:
     argv:
-      - /usr/bin/python3 {{ lookup('file', 'nmap_2.py') }}
+      - /usr/bin/python3 nmap_2.py
   register: result
