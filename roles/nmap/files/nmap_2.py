@@ -167,13 +167,13 @@ def run_nmap_version_detection(host):
 
 
 def load_progress():
-    if os.path.exists("completed_subnets.txt"):
-        with open("completed_subnets.txt", "r") as file:
+    if os.path.exists("/opt/dataGather/nmap/scan_results/completed_subnets.txt"):
+        with open("/opt/dataGather/nmap/scan_results/completed_subnets.txt", "r") as file:
             for line in file:
                 completed_subnets.add(line.strip())
 
 def save_progress():
-    with open("completed_subnets.txt", "w") as file:
+    with open("/opt/dataGather/nmap/scan_results/completed_subnets.txt", "w") as file:
         for subnet in completed_subnets:
             file.write(subnet + "\n")
 
@@ -776,7 +776,7 @@ async def main():
 
         # Process files containing subnet information
         #files = ["/runner/project/roles/nmap/files/10.0.0.0.txt", "/runner/project/roles/nmap/files/172.16.0.0.txt", "/runner/project/roles/nmap/files/192.168.0.0.txt"]
-        files = ["/runner/project/roles/nmap/files/10.0.0.0.txt"]
+        files = ["/runner/project/roles/nmap/files/192.168.0.0.txt"]
         for file_name in files:
             subnets = read_subnets(file_name)
             run_nmap_on_subnets(subnets, csv_writer)
