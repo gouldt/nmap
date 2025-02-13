@@ -8,7 +8,5 @@
     mode: '0755'
 
 - name: execute nmap scans
-  ansible.builtin.command:
-    argv:
-      - /usr/bin/python3 nmap_2.py
+  script: nmap_2.py
   register: result
