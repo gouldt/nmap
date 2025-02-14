@@ -1,12 +1,18 @@
 ---
 # Run mnap scans
 
-- name: create output directory
-  file:
+- name: Remove files from previous run
+  ansible.builtin.file:
+    path: "{{ nmap_output_dir }}"
+    state: absent
+
+
+- name: Create output directory
+  ansible.builtin.file:
     path: "{{ nmap_output_dir }}"
     state: directory
     mode: '0755'
 
-- name: execute nmap scans
-  command: /usr/bin/python3 {{ role_path }}/files/nmap_2.py
+- name: Execute nmap scans
+  ansible.builtin.command: /usr/bin/python3 {{ role_path }}/files/nmap_2.py
   register: output

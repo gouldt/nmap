@@ -781,7 +781,7 @@ async def main():
 
         # Process files containing subnet information
         #files = ["/runner/project/roles/nmap/files/10.0.0.0.txt", "/runner/project/roles/nmap/files/172.16.0.0.txt", "/runner/project/roles/nmap/files/192.168.0.0.txt"]
-        files = ["/runner/project/roles/nmap/files/172.16.0.0.txt"]
+        files = ["/runner/project/roles/nmap/files/192.168.0.0.txt"]
         for file_name in files:
             subnets = read_subnets(file_name)
             run_nmap_on_subnets(subnets, csv_writer)
@@ -793,7 +793,7 @@ async def main():
     ssh_results = await asyncio.gather(*ssh_tasks)
 
     #network_device_csv_file = '/opt/Network_Automation/Python_Projects/nmap_integration/Ansible_Serial_Model_Validation/Inventory/network_device_info.csv'
-    network_device_csv_file = '/opt/dataGather/nmap/network_device_info.csv'
+    network_device_csv_file = '/opt/dataGather/nmap/scan_results/network_device_info.csv'
 
     if ssh_results:
         # Write SSH results to the CSV file first
