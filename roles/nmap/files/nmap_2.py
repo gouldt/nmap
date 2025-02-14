@@ -674,10 +674,14 @@ def process_ap_summary_output(ap_output, host_name, host_ip, best_match, usernam
 def write_ssh_results_to_csv(results, csv_file):
     with open(csv_file, 'w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(["Device Name", "Device IP", "Detected Type", "Model", "Version", "Serial Number", "Hostname", "Credentials"])
+        #writer.writerow(["Device Name", "Device IP", "Detected Type", "Model", "Version", "Serial Number", "Hostname", "Credentials"])
+        writer.writerow(["Device Name", "Device IP", "Detected Type", "Model", "Version", "Serial Number", "Hostname", "Credentials","Network OS" ])
         
         for result_list in results:  # Each item here is a list of dictionaries
             for device_info in result_list:  # Each item here is a dictionary
+                #TJG
+                ansible_network_os = device_type_mapping.get(device_info.get('device_type', ''), (None, 'unknown'))[1]
+
                 writer.writerow([
                     device_info.get('host_name', ''), 
                     device_info.get('host_ip', ''), 
@@ -686,7 +690,8 @@ def write_ssh_results_to_csv(results, csv_file):
                     device_info.get('version', ''), 
                     device_info.get('serial_number', ''), 
                     device_info.get('hostname', ''), 
-                    device_info.get('credentials', '')
+                    device_info.get('credentials', ''),
+                    ansible_network_os
                 ])
 
 # Main function to run SSH tasks
